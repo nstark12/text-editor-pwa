@@ -12,23 +12,22 @@ module.exports = () => {
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js',
-      database: './src/js/database.js',
-      editor: './src/js/editor.js',
-      header: './src/js/header.js'
     },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
-    devServer: {
-      hot: "only"
-    },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html'
+        template: './index.html',
+        title: 'JATE'
+      }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js'
       }),
       new WebpackPwaManifest({
-        name: "JATE",
+        name: "Just Another Text Editor",
         short_name: "JATE",
         description: "A simple text editor that can be installed.",
         background_color: 'pink',
@@ -37,6 +36,7 @@ module.exports = () => {
         start_url: '/',
         publicPath: '/',
         inject: true,
+        fingerprints: true,
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
@@ -46,10 +46,6 @@ module.exports = () => {
         ]
 
       }),
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'src-sw.js'
-      })
     ],
 
     module: {
@@ -69,9 +65,7 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: [
-                '@babel/plugin-proposal-object-rest-spread',
-                '@babel/transform-runtime'
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'
               ]
             }
           }
