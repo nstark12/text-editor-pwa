@@ -20,13 +20,9 @@ module.exports = () => {
     devServer: {
       hot: true
     },
-    performance: {
-      hints: false
-    },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html',
-        title: 'JATE'
+        template: './index.html'
       }),
       new WebpackPwaManifest({
         name: "JATE",
@@ -45,6 +41,10 @@ module.exports = () => {
           }
         ]
 
+      }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js'
       })
     ],
 
@@ -59,16 +59,14 @@ module.exports = () => {
           type: 'asset/resource'
         },
         {
-          test: /\.(?:js|mjs|cjs)$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
-              presets: [
-                ['@babel/preset-env', { targets: "defaults" }]
-              ],
+              presets: ['@babel/preset-env'],
               plugins: [
-                '@babel/plugin/proposal-object-rest-spread',
+                '@babel/plugin-proposal-object-rest-spread',
                 '@babel/transform-runtime'
               ]
             }
