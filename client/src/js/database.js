@@ -31,13 +31,7 @@ export const getDb = async () => {
   const store = transaction.objectStore(dbName)
   const request = store.getAll()
   const result = await request
-  console.log(result)
-
-  if(result.length <1) {
-    return
-  }
-
-  return result[0].content
+  return result?.value
 }
 
 initdb();

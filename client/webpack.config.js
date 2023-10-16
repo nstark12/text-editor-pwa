@@ -18,7 +18,7 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-      hot: true
+      hot: "only"
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -33,6 +33,7 @@ module.exports = () => {
         display: 'standalone',
         start_url: '/',
         publicPath: '/',
+        inject: true,
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
