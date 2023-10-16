@@ -17,12 +17,42 @@ module.exports = () => {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
+    devServer: {
+      hot: true
+    },
+    performance: {
+      hints: false
+    },
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: './index.html',
+        title: 'JATE'
+      }),
+      new WebpackPwaManifest({
+        name: "JATE",
+        short_name: "JATE",
+        description: "A simple text editor that can be installed.",
+        background_color: 'pink',
+        theme_color: 'pink',
+        display: 'standalone',
+        start_url: '/',
+        publicPath: '/',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons')
+          }
+        ]
+
+      })
     ],
 
     module: {
       rules: [
+        {
+          
+        }
         
       ],
     },
